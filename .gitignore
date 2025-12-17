@@ -1,1 +1,4 @@
-train/.venv
+
+train/.venv/
+train/__pycache__/
+train/*.pyc
