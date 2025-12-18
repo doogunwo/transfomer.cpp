@@ -1,6 +1,6 @@
 import torch
 import torch_directml
-
+# .\.venv\Scripts\python.exe check_dml.py
 # 1. DirectML 디바이스 가져오기
 dml = torch_directml.device()
 
