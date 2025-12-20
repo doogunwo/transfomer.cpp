@@ -1,5 +1,5 @@
-import torch
-import torch.nn as nn
+import torch # type: ignore
+import torch.nn as nn # type: ignore
 
 # Layer 폴더의 blocks.py에서 모든 부품을 가져옵니다.
 # (blocks.py에 클래스들이 잘 정의되어 있어야 합니다)
