@@ -10,24 +10,15 @@ llama.cpp를 모방하여, CPU 환경에서 최적의 성능을 내는 것을 �
 [ ] Inference Engine: mmap 기반 로더 및 C++ 추론 커널 구현 예정.
 
 ### 📂 디렉토리 구조 (Project Structure)
-.
-├── engine/           # 고성능 추론 엔진 (연산 커널 및 실행 로직)
-│   ├── main.cpp      # CLI 엔트리 포인트 및 추론 제어
-│   ├── model.cpp     # C++ 기반 Transformer 추론 구현
-│   └── loader.cpp    # mmap 기반 가중치 로딩 엔진
-├── include/          # MTP 기반 텐서 추상화 및 헤더 파일
-│   ├── tensor.hpp    # 템플릿 기반 텐서 클래스
-│   └── kernels.hpp   # NEON/SIMD 가속 연산 커널
-├── models/           # 추출된 바이너리 가중치(.bin) 저장소 (Git 제외)
-├── scripts/          # 가중치 변환(Export) 및 배포용 스크립트
-├── tests/            # 연산 정확도 검증을 위한 유닛 테스트
-├── train/            # PyTorch 기반 학습 환경 (Mac/DML 지원)
-│   ├── Layer/        # 트랜스포머 핵심 레이어(Attention, FFN 등) 구현부
-│   ├── train_mac.py  # Apple Silicon 가속 학습 스크립트
-│   ├── transformer.py # 모델 전체 아키텍처 조립
-│   └── DataLoader.py # 데이터 전처리 및 로딩 파이프라인
-├── Makefile          # 빌드 시스템 (Clang/OpenMP/SIMD 최적화 설정)
-└── README.md
+
+| 분류 | 경로 | 역할 및 주요 기능 |
+| :--- | :--- | :--- |
+| **Inference Engine** | `engine/` | 고성능 추론 엔진 소스 (main.cpp, model.cpp, loader.cpp) |
+| **Headers** | `include/` | MTP 기반 텐서 추상화 및 SIMD(NEON) 가속 커널 헤더 |
+| **Models** | `models/` | 추출된 TFCP 규격 바이너리 가중치 저장소 |
+| **Scripts** | `scripts/` | PyTorch 가중치 추출(Export) 및 변환 유틸리티 |
+| **Training** | `train/` | MPS 가속 학습 파이프라인 및 모델 레이어(Layer/) 정의 |
+| **Build & Test** | `Makefile`, `tests/` | 최적화 빌드 설정 및 연산 정확도 유닛 테스트 |
 
 ### ### 🛠 가중치 바이너리 규격 (TFCP v1 Design)
 
