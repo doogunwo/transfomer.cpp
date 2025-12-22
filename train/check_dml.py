@@ -13,6 +13,6 @@ try:
     b = torch.tensor([3.0, 4.0]).to(dml)
     c = a + b
     print(f"연산 결과: {c}")
-    print("✅ 성공! AMD 내장 GPU 가속이 작동 중입니다.")
+    print("- 성공! AMD 내장 GPU 가속이 작동 중입니다.")
 except Exception as e:
-    print(f"❌ 실패: {e}")
+    print(f"- 실패: {e}")
