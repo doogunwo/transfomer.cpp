@@ -2,3 +2,4 @@ train/venv/
 train/__pycache__/
 train/*.pyc
 train/hf_cache
+modesl/pretrained_opus_de_en.pt
