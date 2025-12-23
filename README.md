@@ -3,11 +3,8 @@ llama.cpp를 모방하여, CPU 환경에서 최적의 성능을 내는 것을 �
 
 ### 🚀 프로젝트 현황 (Milestones)
 
-[x] Model Modeling: PyTorch 기반의 Transformer(Encoder-Decoder) 모델 설계 완료.
-[x] MPS Acceleration: Apple Silicon(M1/M2/M3) GPU를 활용한 Mac 전용 학습 파이프라인 train_mac.py 구현
-[x] Project Architecture: 엔진(engine), 헤더(include), 스크립트(scripts) 기반의 C++ 프로젝트 구조 정리
-[ ] Weight Export: 학습된 .pt 가중치를 전용 바이너리 포맷(TFCP)으로 추출하는 모듈 구현 중.
-[ ] Inference Engine: mmap 기반 로더 및 C++ 추론 커널 구현 예정.
+[ ] Weight Export: 학습된 .pt 가중치를 전용 바이너리 포맷(TFCP)으로 추출하는 모듈 구현 중. \
+[ ] Inference Engine: mmap 기반 로더 및 C++ 추론 커널 구현 예정. \
 
 ### 📂 디렉토리 구조 (Project Structure)
 

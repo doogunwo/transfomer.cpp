@@ -201,5 +201,5 @@ for epoch in range(1, EPOCHS + 1):
     va_loss = evaluate(epoch)
     print(f"[Epoch] {epoch}/{EPOCHS} train_loss={tr_loss:.4f} valid_loss={va_loss:.4f}")
 
-torch.save(model.state_dict(), "transformer_opus_books_de_en.pt")
+torch.save(model.state_dict(), "../models/transformer_opus_books_de_en.pt")
 print("saved: transformer_opus_books_de_en.pt")
