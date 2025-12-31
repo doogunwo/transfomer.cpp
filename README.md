@@ -1,19 +1,39 @@
+# transfomer.cpp — Bit-Serial Inference Engine for CPU
+---
+An experimental CPU inference project that accelerates **linear layers** using **bit-slicing (bit-planes)** and **bit-serial computation**.  
+It replaces conventional FP GEMM-style multiplication with **bitwise primitives** such as **AND** and **POPCOUNT** (plus lightweight accumulation).
 
-# Bit-Serial Dynamic Inference Engine for CPU
+## Description
+---
+This project converts an **INT4-quantized linear layer** into **four bit-planes** (one per bit position) and computes the layer output via **bit-serial accumulation**.
 
-CPU 환경에서 Bit-slicing(비트 평면) 및 Bit-serial computation을 활용하여 선형 레이어 연산을 가속하는 실험적 추론 엔진. \
-부동소수점 곱셈(GEMM)을 Bitwise 연산(AND, POPCOUNT, SHIFT)으로 대체 \ 
+## Switch Boards: Bit-Plane Storage
+---
+Instead of storing weights as packed INT4 nibbles, this project stores weights as **four physically separated bit-planes**:
 
-1. 핵심 아이디어 \
-INT4 Quantization: FP32 가중치를 정밀도 손실을 최소화하여 4비트 정수형으로 압축 \
-Bit-Plane Slicing: 각 비트 자릿수($2^3, 2^2, 2^1, 2^0$)별로 별도의 4개 비트 평면(Bit-planes), 즉 "Switch Boards"를 생성 \
-CPU가 AVX2 SIMD 명령어로 한 번에 256개의 가중치 비트를 읽어와 Bitwise AND 및 Popcount 연산을 수행할 수 있게 합니다.\
+- **Board 3 (MSB)**: dominates large-magnitude contribution  
+- **Board 0 (LSB)**: refines fine-grained precision
 
-2. Layered Switch Boards (Bit-Plane Storage) \
-가중치를 단순한 숫자가 아닌, 4개의 비트 평면(Bit-planes)으로 물리적으로 분리하여 저장 \
+This representation makes the linear layer explicitly **bit-addressable** at runtime.
 
-Board 3 (MSB): 가장 큰 값을 결정하는 상위 비트 평면 \
-Board 0 (LSB): 정밀도를 결정하는 하위 비트 평면 \
+## Mathematical Formulation
+---
+Let an INT4 weight matrix \(W\) be decomposed into four binary matrices \(\mathbf{B}^{(i)}\):
 
-3. Dynamic Speculation (Early Exit) \
-상위 비트(MSB)부터 우선 연산하여 결과값이 임계치에 도달하면 하위 비트 연산을 생략합니다. 이를 통해 정밀도(Accuracy)와 지연시간(Latency)을 실시간으로 조절할 수 있습니다. \
+\[
+W = \sum_{i=0}^{3} 2^i \cdot \mathbf{B}^{(i)}
+\]
+
+Then the linear operation becomes:
+
+\[
+Y = WX = \sum_{i=0}^{3} 2^i \cdot (\mathbf{B}^{(i)}X)
+\]
+
+Each term \((\mathbf{B}^{(i)}X)\) is computed using bitwise operations and popcount-based accumulation.
+
+## Current Status
+---
+- [x] INT4 conversion of FP32 weights
+- [x] Bit-plane slicing into 4 switch boards (per linear layer)
+- [x] Project structure focused on CPU execution using bitwise primitives (AND / POPCOUNT)
