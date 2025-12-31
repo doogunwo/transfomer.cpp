@@ -1,4 +1,4 @@
-# transfomer.cpp — Bit-Serial Inference Engine for CPU
+# Bit-Serial Inference Engine for CPU
 ---
 An experimental CPU inference project that accelerates **linear layers** using **bit-slicing (bit-planes)** and **bit-serial computation**.  
 It replaces conventional FP GEMM-style multiplication with **bitwise primitives** such as **AND** and **POPCOUNT** (plus lightweight accumulation).
