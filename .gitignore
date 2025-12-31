@@ -3,3 +3,10 @@ train/__pycache__/
 train/*.pyc
 train/hf_cache
 models/pretrained_opus_de_en.pt
+
+train/.venv/
+.venv/
+
+# 대용량 모델 파일 제외 (필요한 경우만 올림)
+models/*.gtf
+models/*.pt
