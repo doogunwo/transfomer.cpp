@@ -17,20 +17,20 @@ Instead of storing weights as packed INT4 nibbles, this project stores weights a
 This representation makes the linear layer explicitly **bit-addressable** at runtime.
 
 ## Mathematical Formulation
----
-Let an INT4 weight matrix \(W\) be decomposed into four binary matrices \(\mathbf{B}^{(i)}\):
 
-\[
+Let an INT4 weight matrix $W$ be decomposed into four binary matrices $\mathbf{B}^{(i)}$:
+
+$$
 W = \sum_{i=0}^{3} 2^i \cdot \mathbf{B}^{(i)}
-\]
+$$
 
 Then the linear operation becomes:
 
-\[
+$$
 Y = WX = \sum_{i=0}^{3} 2^i \cdot (\mathbf{B}^{(i)}X)
-\]
+$$
 
-Each term \((\mathbf{B}^{(i)}X)\) is computed using bitwise operations and popcount-based accumulation.
+Each term $(\mathbf{B}^{(i)}X)$ is computed using bitwise operations and popcount-based accumulation.
 
 ## Current Status
 ---
