@@ -40,8 +40,12 @@ class MultiHeadAttention(nn.Module):
         V = self.w_v(v).view(batch_size, -1, self.n_head, self.d_head).transpose(1, 2)
 
         scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_head)
+        neg_inf = torch.finfo(scores.dtype).min
         if mask is not None:
-            scores = scores.masked_fill(mask == 0, -1e9)
+            if mask.dtype == torch.bool:
+                scores = scores.masked_fill(mask, neg_inf)
+            else:
+                scores = scores.masked_fill(mask==0, neg_inf)
 
         attn_weights = torch.softmax(scores, dim=-1)
         context = torch.matmul(attn_weights, V)
